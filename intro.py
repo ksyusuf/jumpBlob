@@ -18,13 +18,8 @@ exit_game = False
 is_sound_playing = False
 
 
-
 class BlobActor(Actor):
     def __init__(self, image, **kwargs):
-        """
-        :param image: Başlangıç görüntüsü (örneğin: 'blob0')
-        :param kwargs: Actor sınıfının diğer parametreleri (pos, anchor, vb.)
-        """
         super().__init__(image)
         self.images = []  # Animasyon kareleri
         self.frame_index = 0  # Mevcut kare indeksi
@@ -42,37 +37,30 @@ class BlobActor(Actor):
                 self.image = self.images[self.frame_index]  # Yeni kareyi yükle
 
     def move_left(self):
-        """Karakteri sola hareket ettirir."""
         self.images = ['blob_left7', 'blob_left6', 'blob_left5', 'blob_left4']
         self.flip_x = True  # Sola dönük (flip aktif)
         self.x -= 6
 
     def move_right(self):
-        """Karakteri sağa hareket ettirir."""
         self.images = ['blob4', 'blob5', 'blob6', 'blob7']
         self.flip_x = False  # Sağa dönük (flip pasif)
         self.x += 6
 
     def jump(self):
-        """Karakteri sağa hareket ettirir."""
         if self.flip_x:
             self.images = ['blob_left7', 'blob_left6', 'blob_left5', 'blob_left4']
         else:
             self.images = ['blob4', 'blob5', 'blob6', 'blob7']
 
     def idle(self):
-        """Karakter durduğunda varsayılan animasyonu ayarlar."""
         if self.flip_x:
             self.images = ['blob_left2', 'blob_left3']
         else:
             self.images = ['blob0', 'blob1']
 
+
 class ChickenActor(Actor):
     def __init__(self, image, **kwargs):
-        """
-        :param image: Başlangıç görüntüsü (örneğin: 'blob0')
-        :param kwargs: Actor sınıfının diğer parametreleri (pos, anchor, vb.)
-        """
         super().__init__(image)
         self.images = []  # Animasyon kareleri
         self.frame_index = 0  # Mevcut kare indeksi
@@ -112,11 +100,11 @@ class ChickenActor(Actor):
             self.x += 2
         else:
             self.images = ['chicken_walk0',
-                       'chicken_walk1',
-                       'chicken_walk2',
-                       'chicken_walk3',
-                       'chicken_walk4',
-                       'chicken_walk5']
+                           'chicken_walk1',
+                           'chicken_walk2',
+                           'chicken_walk3',
+                           'chicken_walk4',
+                           'chicken_walk5']
             self.x += 1
 
     def chicken_start_move(self):
@@ -140,8 +128,10 @@ blob = BlobActor('blob0')
 blob.x = WIDTH // 2
 blob.y = HEIGHT - (HEIGHT//4)
 
-# TAVUK
+# TAVUKLAR
 chickens = []
+
+
 def chickenGenerator():
     for _ in range(12):
         chicken = ChickenActor('chicken_walk0')
@@ -196,6 +186,7 @@ def draw():
                          fontname="lambda-regular", fontsize=35)
         for chicken in chickens:
             chicken.draw()
+
 
 def on_mouse_down(pos):
     global play_game, game_over, blob, game_music, menu_button, chickens, exit_button, score
